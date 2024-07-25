@@ -4,3 +4,8 @@ spring:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+
+
+jwt:
+  secret: ${jwt_Key}
+  expiration_time: 180

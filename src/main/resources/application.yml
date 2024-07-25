@@ -1,0 +1,75 @@
+
+spring:
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+  config:
+    import: "optional:configserver:"
+  profiles:
+    group:
+      "local": "local, common"
+      "development": "development,common"
+    active: local
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        highlight_sql: true
+    defer-datasource-initialization: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+#    cors:
+#      allowed-origins: "*"
+
+server:
+  port: 9001
+
+---
+# ??
+spring:
+  config:
+    activate:
+      on-profile: "common"
+  servlet:
+    multipart:
+      max-file-size: 5GB
+      max-request-size: 5GB
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: smu-capstone-bucket1
+    stack:
+      auto: false
+    credentials:
+      instance-profile: true
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+---
+# 로컬 환경
+spring:
+  environment: "local"
+  config:
+    activate:
+      on-profile: "local"
+  file-dir: /src/main/resources/static/files/
+---
+# 배포 환경
+spring:
+  environment: "development"
+  config:
+    activate:
+      on-profile: "development"
+  file-dir: /home/ec2-user/files/

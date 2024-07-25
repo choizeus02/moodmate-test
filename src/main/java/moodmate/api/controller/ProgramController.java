@@ -118,7 +118,7 @@ public class ProgramController {
 
         Program program = programService.findProgram(programId);
         List<ReviewDto> reviewDtos = program.getReviews().stream()
-                .map(review -> new ReviewDto(review.getReviewText()))
+                .map(review -> new ReviewDto(review.getReviewText(), review.getRating()))
                 .collect(Collectors.toList());
 
         ProgramDetailsDto programDetailsDto = new ProgramDetailsDto(
@@ -138,6 +138,7 @@ public class ProgramController {
     @AllArgsConstructor
     public class ReviewDto {
         private String reviewText;
+        private float rating;
 //        private ReviewKeyWord reviewKeyWord;
     }
 
